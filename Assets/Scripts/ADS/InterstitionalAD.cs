@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class InterstitionalAD : MonoBehaviour
 {
+/*
     private Interstitial _interstitial;
 
     private void Start()
@@ -21,7 +22,7 @@ public class InterstitionalAD : MonoBehaviour
 
     private void RequestInterstitial()
     {
-        string adUnitId = "R-M-2004640-1";
+        string adUnitId = "R-M-*******-*";
         _interstitial = new Interstitial(adUnitId);
 
         AdRequest request = new AdRequest.Builder().Build();
@@ -56,5 +57,5 @@ public class InterstitionalAD : MonoBehaviour
     public void Completed(object sender, System.EventArgs args)
     {
         Debug.Log("Completed");
-    }
+    }*/
 }
