@@ -22,10 +22,7 @@ public class BrickStopper : MonoBehaviour
     private void CheckBlockedBrick()
     {
         var brick = FindBrickByRaycast(Vector3.down);
-        if (brick != null)
-            _isBlocked = brick.CheckBlocked();
-        else
-            _isBlocked = false;
+        _isBlocked = brick != null ? brick.CheckBlocked() : false;
     }
 
     private BrickStopper FindBrickByRaycast(Vector3 direction)
@@ -33,15 +30,9 @@ public class BrickStopper : MonoBehaviour
         Ray Ray = new Ray(transform.position, direction);
         RaycastHit Hit;
 
-        if (Physics.Raycast(Ray, out Hit, 0.15f))
-        {
-            Debug.DrawLine(Ray.origin, Hit.point, Color.red);
+        if (Physics.Raycast(Ray, out Hit, 0.15f) && Hit.collider.gameObject.TryGetComponent(out BrickStopper brick))
+            return brick;
 
-            if (Hit.collider.gameObject.TryGetComponent(out BrickStopper brick))
-            {
-                return brick;
-            }
-        }
         return null;
     }
 

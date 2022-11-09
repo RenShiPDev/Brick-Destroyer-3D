@@ -5,10 +5,10 @@ using UnityEngine.UI;
 
 public class LevelButtonSpawner : MonoBehaviour
 {
-    [SerializeField] private Transform _spawnPosTransform;
     [SerializeField] private GameObject _content;
     [SerializeField] private GameObject _levelButton;
     [SerializeField] private GameObject _selectorImage;
+    [SerializeField] private Transform _spawnPosTransform;s
     [SerializeField] private Scrollbar _scrollBar;
     [SerializeField] private ObjectHidder _hidder;
 
@@ -20,7 +20,6 @@ public class LevelButtonSpawner : MonoBehaviour
     {
         _hidder.VisibleHandler.AddListener(SetScrollBar);
         _levelRecord = PlayerPrefs.GetInt("LevelRecord");
-        //PlayerPrefs.DeleteAll();
 
         if (_levelRecord == 0)
         {

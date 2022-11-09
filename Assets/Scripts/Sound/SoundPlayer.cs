@@ -20,11 +20,6 @@ public class SoundPlayer : MonoBehaviour
                 AddAudioSource();
         }
     }
-    private void AddAudioSource()
-    {
-        var audioSource = gameObject.AddComponent<AudioSource>();
-        _audioSources.Add(audioSource);
-    }
 
     public void PlaySound()
     {
@@ -38,5 +33,11 @@ public class SoundPlayer : MonoBehaviour
         _currentAudioSource++;
         if (_currentAudioSource >= _audioSources.Count)
             _currentAudioSource = 0;
+    }
+
+    private void AddAudioSource()
+    {
+        var audioSource = gameObject.AddComponent<AudioSource>();
+        _audioSources.Add(audioSource);
     }
 }

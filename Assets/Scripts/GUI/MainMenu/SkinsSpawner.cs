@@ -18,15 +18,13 @@ public class SkinsSpawner : MonoBehaviour
         InitFolder();
 
        if ( PlayerPrefs.GetString("CurrentBullet") == "")
-       { 
             PlayerPrefs.SetString("CurrentBullet", "Mat_1");
-       }
 
        for (int i = 0; i < 12; i++)
-        {
+       {
             float xPos = (i % 3) * _spawnPos.localPosition.x;
             SpawnSkin(-xPos, -_height * (i / 3), i);
-        }
+       }
     }
 
     private void InitFolder()

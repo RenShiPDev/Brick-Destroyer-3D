@@ -17,9 +17,7 @@ public class LevelCompleteMenu : MonoBehaviour
         {
             _timer += Time.deltaTime;
             if (_timer >= 0.3f)
-            {
                 SpawnCrystals();
-            }
         }
     }
 
@@ -42,7 +40,7 @@ public class LevelCompleteMenu : MonoBehaviour
 
         _visibilityChanged = true;
     }
-
+     
     private void SpawnCrystals(int count = 10)
     {
         _crystalSpawned = true;

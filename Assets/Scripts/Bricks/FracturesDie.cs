@@ -5,11 +5,10 @@ using UnityEngine;
 public class FracturesDie : MonoBehaviour
 {
     private Transform _previousParent;
-
-    private float _lifeTime = 1;
     private Vector3 _startScale;
     private Vector3 _startLocalPos;
 
+    private float _lifeTime = 1;
 
     public void Initialize(Transform previousParent)
     {
@@ -43,8 +42,6 @@ public class FracturesDie : MonoBehaviour
         transform.localScale = _startScale * _lifeTime;
 
         if(_lifeTime < 0)
-        {
             gameObject.SetActive(false);
-        }
     }
 }

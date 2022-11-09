@@ -6,6 +6,7 @@ public class CrystalBrick : MonoBehaviour
 {
     [SerializeField] private GameObject _crystalPrefab;
     [SerializeField] private BrickHealth _brickHealth;
+
     [SerializeField] private int _crystalsCount;
 
     private void OnEnable()

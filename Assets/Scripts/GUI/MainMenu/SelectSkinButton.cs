@@ -14,18 +14,19 @@ public class SelectSkinButton : MonoBehaviour
     private SkinsSpawner _spawner;
     private CrystalText _crystalText;
     private GameObject _selectImage;
+
     private string _materialName;
     private int _price;
 
     public void Initialize(int id, SkinsSpawner spawner, GameObject selector)
     {
+        _crystalText = GameObject.FindObjectOfType<CrystalText>();
+
         _price = (int)(id * 21.4189268f);
         _priceText.text = _price.ToString();
         _materialName = "Mat_" + (id + 1);
         _spawner = spawner;
         _selectImage = selector;
-
-        _crystalText = GameObject.FindObjectOfType<CrystalText>();
 
         OnMaterialChanged();
     }
@@ -33,16 +34,13 @@ public class SelectSkinButton : MonoBehaviour
     public void OnClick()
     {
         if (FindCurrentMaterial(_materialName))
-        {
             PlayerPrefs.SetString("CurrentBullet", _materialName);
-        }
         else
         {
             int crystals = PlayerPrefs.GetInt("Crystals");
+
             if (crystals >= _price)
-            {
                 SaveMaterial(_materialName);
-            }
         }
         OnMaterialChanged();
     }
@@ -60,6 +58,7 @@ public class SelectSkinButton : MonoBehaviour
 
         PlayerPrefs.SetInt("Crystals", PlayerPrefs.GetInt("Crystals") - _price);
         _priceObject.SetActive(false);
+
         PlayerPrefs.SetString("CurrentBullet", _materialName);
         _crystalText.UpdateCount();
     }
@@ -73,13 +72,11 @@ public class SelectSkinButton : MonoBehaviour
 
         string nextLine = "";
         while ((nextLine = streamReader.ReadLine()) != null)
-        {
             if (materialName == nextLine)
             {
                 streamReader.Close();
                 return true;
             }
-        }
 
         streamReader.Close();
         return false;
@@ -88,8 +85,6 @@ public class SelectSkinButton : MonoBehaviour
     private void OnMaterialChanged()
     {
         if(_materialName == PlayerPrefs.GetString("CurrentBullet"))
-        {
             _selectImage.transform.position = _selectorTransform.position;
-        }
     }
 }

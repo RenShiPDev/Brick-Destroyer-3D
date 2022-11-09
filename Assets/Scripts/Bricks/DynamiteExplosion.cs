@@ -5,6 +5,7 @@ using UnityEngine;
 public class DynamiteExplosion : MonoBehaviour
 {
     [SerializeField] private BrickHealth _brickHealth;
+
     private List<BrickHealth> _closestBricks = new List<BrickHealth>();
 
     private void OnEnable()
@@ -24,9 +25,7 @@ public class DynamiteExplosion : MonoBehaviour
     private void OnDie()
     {
         foreach(var brick in _closestBricks)
-        {
             brick.GetDamage(10);
-        }
     }
 
     private void FindClosestObjects()
@@ -44,14 +43,7 @@ public class DynamiteExplosion : MonoBehaviour
         Ray Ray = new Ray(transform.position, direction);
         RaycastHit Hit;
 
-        if (Physics.Raycast(Ray, out Hit, 1))
-        {
-            Debug.DrawLine(Ray.origin, Hit.point, Color.blue);
-
-            if (Hit.collider.gameObject.TryGetComponent(out BrickHealth brick))
-            {
-                _closestBricks.Add(brick);
-            }
-        }
+        if (Physics.Raycast(Ray, out Hit, 1) && Hit.collider.gameObject.TryGetComponent(out BrickHealth brick))
+            _closestBricks.Add(brick);
     }
 }

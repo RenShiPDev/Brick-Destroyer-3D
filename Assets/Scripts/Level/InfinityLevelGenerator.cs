@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class InfinityLevelGenerator : MonoBehaviour
 {
-    [SerializeField] private Transform _bricksSpawnPos;
-    [SerializeField] private LevelGenerator _levelGenerator;
-
     [SerializeField] private List<GameObject> _standartBricks = new List<GameObject>();
     [SerializeField] private List<GameObject> _bonuces = new List<GameObject>();
+    [SerializeField] private Transform _bricksSpawnPos;
+    [SerializeField] private LevelGenerator _levelGenerator;
 
     private List<GameObject> _standartBricksPool = new List<GameObject>();
     private List<GameObject> _bonucesPool = new List<GameObject>();
@@ -25,7 +24,27 @@ public class InfinityLevelGenerator : MonoBehaviour
     {
         _levelGenerator.ChangeHeightEvent.RemoveListener(SpawnLine);
     }
-     
+
+    public void SpawnLine()
+    {
+        for (int i = 0; i < 11; i++)
+        {
+            if (Random.Range(0, 20) == 1)
+                continue;
+
+            int xPos = i - 5;
+            float ypos = _bricksSpawnPos.localPosition.y;
+            Vector3 spawnPos = new Vector3(xPos, ypos, 0);
+
+            bool isBonuce = Random.Range(0, 20) == 1 ? true : false;
+
+            if (isBonuce)
+                SpawnBricks(_bonucesPool, spawnPos);
+            else
+                SpawnBricks(_standartBricksPool, spawnPos);
+        }
+    }
+
     private List<GameObject> SpawnObjects(List<GameObject> objects, int count)
     {
         var pool = new List<GameObject>();
@@ -41,30 +60,6 @@ public class InfinityLevelGenerator : MonoBehaviour
             }
 
         return pool;
-    }
-
-    public void SpawnLine()
-    {
-        for(int i = 0; i < 11; i++)
-        {
-            if (Random.Range(0, 20) == 1)
-                continue;
-
-            int xPos = i - 5;
-            float ypos = _bricksSpawnPos.localPosition.y;
-            Vector3 spawnPos = new Vector3(xPos, ypos, 0);
-
-            bool isBonuce = Random.Range(0, 20) == 1 ? true : false;
-
-            if (isBonuce)
-            {
-                SpawnBricks(_bonucesPool, spawnPos);
-            }
-            else
-            {
-                SpawnBricks(_standartBricksPool, spawnPos);
-            }
-        }
     }
 
     private void SpawnBricks(List<GameObject> pool, Vector3 position)

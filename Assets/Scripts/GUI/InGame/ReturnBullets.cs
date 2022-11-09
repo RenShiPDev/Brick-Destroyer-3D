@@ -12,9 +12,7 @@ public class ReturnBullets : MonoBehaviour
         {
             _cannonShooter.EndShoot();
             foreach (var bullet in _cannonShooter.GetBullets())
-            {
                 bullet.GetComponent<BulletMover>().Die();
-            }
         }
     }
 }

@@ -11,6 +11,18 @@ public class LaserBonuce : MonoBehaviour
         FindLineObjects();
     }
 
+    public void DamageBricks()
+    {
+        foreach (var brick in _onLineObjects)
+            if (brick.gameObject.activeSelf && brick.gameObject.GetInstanceID() != gameObject.GetInstanceID())
+            {
+                if (brick.gameObject.TryGetComponent(out Bonuse bonuse))
+                    bonuse.ActivateBonuse();
+
+                brick.GetDamage();
+            }
+    }
+
     private void FindLineObjects()
     {
         Vector3 directionVector = transform.forward;
@@ -23,26 +35,7 @@ public class LaserBonuce : MonoBehaviour
         RaycastHit[] hits = Physics.RaycastAll(transform.position, direction, Mathf.Infinity);
 
         foreach (RaycastHit hit in hits)
-        {
             if (hit.collider.gameObject.TryGetComponent(out BrickHealth brick))
-            {
                 _onLineObjects.Add(brick);
-            }
-        }
-    }
-
-    public void DamageBricks()
-    {
-        foreach(var brick in _onLineObjects)
-        {
-            if (brick.gameObject.activeSelf && brick.gameObject.GetInstanceID() != gameObject.GetInstanceID())
-            {
-                if (brick.gameObject.TryGetComponent(out Bonuse bonuse))
-                {
-                    bonuse.ActivateBonuse();
-                }
-                brick.GetDamage();
-            }
-        }
     }
 }

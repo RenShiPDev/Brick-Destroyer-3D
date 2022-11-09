@@ -31,9 +31,7 @@ public class BrickDie : MonoBehaviour
     private void Start()
     {
         for (int i = 0; i < _fractureObject.transform.childCount; i++)
-        {
             _fractures.Add(_fractureObject.transform.GetChild(i).gameObject);
-        }
     }
 
     private void OnDie()

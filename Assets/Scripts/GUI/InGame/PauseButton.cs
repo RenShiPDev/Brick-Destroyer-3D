@@ -7,7 +7,6 @@ public class PauseButton : MonoBehaviour
 {
     [SerializeField] private CannonShooter _shooter;
     [SerializeField] private TrackDrawer _drawer;
-
     [SerializeField] private Sprite _pauseImage;
     [SerializeField] private Sprite _resumeImage;
     [SerializeField] private Image _image;
@@ -24,32 +23,13 @@ public class PauseButton : MonoBehaviour
             if (bullet.gameObject.activeSelf)
             {
                 bullet.enabled = !_isPaused;
-
-                if (_isPaused)
-                {
-                    _image.sprite = _resumeImage;
-                }
-                else
-                {
-                    _image.sprite = _pauseImage;
-                }
+                _image.sprite = _isPaused ? _resumeImage : _pauseImage;
             }
         }
 
         _shooter.enabled = !_isPaused;
         _drawer.enabled = !_isPaused;
 
-        if (_isPaused)
-        {
-            _image.sprite = _resumeImage;
-        }
-        else
-        {
-            _image.sprite = _pauseImage;
-        }
-    }
-
-    private void Update()
-    {
+        _image.sprite = _isPaused ? _resumeImage : _pauseImage;
     }
 }

@@ -13,7 +13,6 @@ public class BulletMover : MonoBehaviour
     private CannonShooter _cannonShooter;
     private Transform _bulletPos;
     private Rigidbody _bulletRB;
-
     private Vector3 _targetPosition;
 
     private float _speed;
@@ -50,9 +49,7 @@ public class BulletMover : MonoBehaviour
         else
         {
             if (_isFantom)
-            {
                 gameObject.SetActive(false);
-            }
             else
             {
                 transform.LookAt(_bulletPos);
@@ -68,6 +65,25 @@ public class BulletMover : MonoBehaviour
             }
         }
         _bulletRB.velocity = Vector3.zero;
+    }
+
+    public void Die()
+    {
+        _bulletRB.isKinematic = true;
+        GetComponent<Collider>().enabled = false;
+        transform.LookAt(_bulletPos);
+        _isDied = true;
+    }
+
+    public void InitBullet(float speed, Transform bulletPos, CannonShooter cannonShooter, Material material = null)
+    {
+        _speed = speed;
+        _bulletPos = bulletPos;
+        _cannonShooter = cannonShooter;
+        _targetPosition = transform.forward;
+
+        if (GetComponent<FantomBullet>() == null)
+            _meshRenderer.material = material;
     }
 
     private void CheckCollisionByRaycast()
@@ -88,23 +104,18 @@ public class BulletMover : MonoBehaviour
             }
 
             if (Hit.collider.gameObject.TryGetComponent(out BrickHealth brickHealth))
-            {
                 brickHealth.GetDamage();
-            }
 
-            if (Hit.collider.gameObject.TryGetComponent(out MoveUpBonuse moveUpBonuse))
-                if (transform.forward.y < 0)
-                {
-                    _targetPosition.y = -transform.forward.y;
-                    transform.LookAt(_targetPosition);
-                    RayCollisionHandler?.Invoke();
-                }
+            if (Hit.collider.gameObject.TryGetComponent(out MoveUpBonuse moveUpBonuse) && transform.forward.y < 0)
+            {
+                _targetPosition.y = -transform.forward.y;
+                transform.LookAt(_targetPosition);
+                RayCollisionHandler?.Invoke();
+            }
 
 
             if (Hit.collider.gameObject.TryGetComponent(out Bonuse bonuse))
-            {
                 bonuse.ActivateBonuse();
-            }
             else
             {
                 _targetPosition = transform.position + newDirection;
@@ -112,24 +123,5 @@ public class BulletMover : MonoBehaviour
                 RayCollisionHandler?.Invoke();
             }
         }
-    }
-
-    public void Die()
-    {
-        _bulletRB.isKinematic = true;
-        GetComponent<Collider>().enabled = false;
-        transform.LookAt(_bulletPos);
-        _isDied = true;
-    }
-
-    public void InitBullet(float speed, Transform bulletPos, CannonShooter cannonShooter, Material material = null)
-    {
-        _speed = speed;
-        _bulletPos = bulletPos;
-        _cannonShooter = cannonShooter;
-        _targetPosition = transform.forward;
-
-        if (GetComponent<FantomBullet>() == null)
-            _meshRenderer.material = material;
     }
 }

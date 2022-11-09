@@ -40,9 +40,8 @@ public class CannonShooter : MonoBehaviour
     private void Start()
     {
         for (int i = 0; i < _bulletCount; i++)
-        {
             InitializeBullet();
-        }
+
         SetCountText();
     }
 
@@ -51,16 +50,43 @@ public class CannonShooter : MonoBehaviour
         OnMouseTouch();
 
         if (!_isShootAccepted)
-        {
             EnableShoot();
-        }
     }
 
     private void FixedUpdate()
     {
         SetCountText();
+
         if (_isShoot)
             Shoot();
+    }
+
+    public void PushBullet(GameObject bullet)
+    {
+        _bullets.Push(bullet);
+    }
+
+    public bool CheckShooting()
+    {
+        return _isShoot || _bullets.Count != _bulletCount;
+    }
+
+    public void EndShoot()
+    {
+        _isShootAccepted = false;
+        _isShoot = false;
+        _shootCount = 0;
+    }
+
+    public List<GameObject> GetBullets()
+    {
+        return _spawnedBullets;
+    }
+
+    public void AddBullets()
+    {
+        _bulletCount++;
+        InitializeBullet();
     }
 
     private void OnMouseTouch()
@@ -75,9 +101,8 @@ public class CannonShooter : MonoBehaviour
                 if(mouseHit.collider.gameObject.GetComponent<SafeZone>() == null)
                 {
                     if (mouseHit.point.y <= _limitObject.transform.position.y)
-                    {
                         mouseHit.point = new Vector3(mouseHit.point.x, _limitObject.transform.position.y, mouseHit.point.z);
-                    }
+
                     _shootDirectionV3 = (mouseHit.point - _cannon.transform.position).normalized;
                     _shootDirectionV3.z = 0;
                     _isShoot = true;
@@ -113,9 +138,7 @@ public class CannonShooter : MonoBehaviour
         if (_timer > _shootSpeed)
         {
             if (_shootCount >= _bulletCount)
-            {
                 EndShoot();
-            }
             else
             {
                 var bullet = _bullets.Pop();
@@ -143,37 +166,6 @@ public class CannonShooter : MonoBehaviour
 
     private void SetCountText()
     {
-        if (_bullets.Count > 0)
-            _countText.text = _bullets.Count.ToString();
-        else
-            _countText.text = "";
-    }
-
-    public void PushBullet(GameObject bullet)
-    {
-        _bullets.Push(bullet);
-    }
-
-    public bool CheckShooting()
-    {
-        return _isShoot || _bullets.Count != _bulletCount;
-    }
-
-    public void EndShoot()
-    {
-        _isShootAccepted = false;
-        _isShoot = false;
-        _shootCount = 0;
-    }
-
-    public List<GameObject> GetBullets()
-    {
-        return _spawnedBullets;
-    }
-
-    public void AddBullets()
-    {
-        _bulletCount++;
-        InitializeBullet();
+        _countText.text = _bullets.Count > 0 ? _bullets.Count.ToString() : "";
     }
 }

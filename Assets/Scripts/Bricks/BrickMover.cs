@@ -38,15 +38,22 @@ public class BrickMover : MonoBehaviour
     private void Update()
     {
         Move();
+        ChangeScale();
+    }
 
-        if ((transform.localScale - _startScale).magnitude > 0.1f)
-        {
-            transform.localScale = Vector3.Slerp(transform.localScale, _startScale, 3 * Time.deltaTime);
-        }
-        else
-        {
-            transform.localScale = _startScale;
-        }
+    public void ChangeHeight()
+    {
+        Vector3 targetPos = new Vector3(transform.localPosition.x, _targetHeight, transform.localPosition.z);
+        transform.localPosition = targetPos;
+
+        _targetHeight--;
+        PositionChangedEvent?.Invoke();
+    }
+
+    private void ChangeScale()
+    {
+        Vector3 targetScale = Vector3.Slerp(transform.localScale, _startScale, 3 * Time.deltaTime);
+        transform.localScale = (transform.localScale - _startScale).magnitude > 0.1f ? targetScale : _startScale;
     }
 
     private void Move()
@@ -58,22 +65,9 @@ public class BrickMover : MonoBehaviour
             transform.localPosition = new Vector3(transform.localPosition.x, targetPos.y, transform.localPosition.z);
         }
         else
-        {
             transform.localPosition = targetPos;
-        }
 
         if (transform.position.y <= _brickLimit.position.y)
-        {
             _gameOverMenu.GameOver();
-        }
-    }
-
-    public void ChangeHeight()
-    {
-        Vector3 targetPos = new Vector3(transform.localPosition.x, _targetHeight, transform.localPosition.z);
-        transform.localPosition = targetPos;
-
-        _targetHeight--;
-        PositionChangedEvent?.Invoke();
     }
 }

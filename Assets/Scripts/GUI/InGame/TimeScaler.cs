@@ -7,6 +7,7 @@ public class TimeScaler : MonoBehaviour
 {
     [SerializeField] private CannonShooter _shooter;
     [SerializeField] private Text _text;
+
     [SerializeField] private float _scaleTimeOut;
 
     private float _timer;

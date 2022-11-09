@@ -13,9 +13,8 @@ public class LevelGenerator : MonoBehaviour
     [SerializeField] private InfinityLevelGenerator _infinityLevelGenerator;
 
     [SerializeField] private float _speed;
-    [SerializeField] private bool _isInfinityLevel;
-
     [SerializeField] private int _level;
+    [SerializeField] private bool _isInfinityLevel;
 
     private int _levelID;
 
@@ -33,9 +32,7 @@ public class LevelGenerator : MonoBehaviour
         }
 
         if (Resources.LoadAll<GameObject>("Levels").Length < _levelID)
-        {
             _isInfinityLevel = true;
-        }
 
         if (!_isInfinityLevel)
             SpawnRoom();
@@ -46,6 +43,11 @@ public class LevelGenerator : MonoBehaviour
             _levelCompleteMenu.gameObject.SetActive(false);
             _infinityLevelGenerator.enabled = true;
         }
+    }
+
+    public void ChangeHeight()
+    {
+        ChangeHeightEvent?.Invoke();
     }
 
     private void SpawnRoom()
@@ -62,10 +64,5 @@ public class LevelGenerator : MonoBehaviour
             PlayerPrefs.SetInt("CurrentLevel", 1);
             SceneManager.LoadScene("GameScene");
         }
-    }
-
-    public void ChangeHeight()
-    {
-        ChangeHeightEvent?.Invoke();
     }
 }

@@ -15,10 +15,9 @@ public class SkinObject : MonoBehaviour
     {
         _meshRenderer.material = material;
 
-        if ( FindCurrentMaterial(material) )
-        {
+        if (FindCurrentMaterial(material))
             _priceObject.SetActive(false);
-        }
+
         _skinButton.Initialize(id, spawner, selectorImage);
     }
 
@@ -31,13 +30,11 @@ public class SkinObject : MonoBehaviour
 
         string nextLine = "";
         while ((nextLine = streamReader.ReadLine()) != null)
-        {
             if(material.name == nextLine)
             {
                 streamReader.Close();
                 return true;
             }
-        }
 
         streamReader.Close();
         return false;

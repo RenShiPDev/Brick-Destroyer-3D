@@ -9,9 +9,9 @@ public class TrackDrawer : MonoBehaviour
     [SerializeField] private GameObject _poolObject;
     [SerializeField] private GameObject _limitObject;
 
-    [SerializeField] private int _lineSpheresCount;
-    [SerializeField] private float _maxTrackLength;
     [SerializeField] private List<string> _ignoredRaycastLayers = new List<string>();
+    [SerializeField] private float _maxTrackLength;
+    [SerializeField] private int _lineSpheresCount;
 
     private List<GameObject> _lineSpheres = new List<GameObject>();
 
@@ -28,9 +28,7 @@ public class TrackDrawer : MonoBehaviour
         {
             int layerIndex = LayerMask.NameToLayer(layerName);
             if (layerIndex != -1)
-            {
                 _layerMask |= (1 << layerIndex);
-            }
         }
         _layerMask = ~_layerMask;
 
@@ -44,7 +42,6 @@ public class TrackDrawer : MonoBehaviour
 
     private void Update()
     {
-        //OnTouch();
         OnMouseTouch();
     }
 
@@ -60,9 +57,8 @@ public class TrackDrawer : MonoBehaviour
                 if(mouseHit.collider.gameObject.GetComponent<SafeZone>() == null)
                 {
                     if (mouseHit.point.y <= _limitObject.transform.position.y)
-                    {
                         mouseHit.point = new Vector3(mouseHit.point.x, _limitObject.transform.position.y, mouseHit.point.z);
-                    }
+
                     Vector3 mouseDirectionV3 = (mouseHit.point - _cannon.transform.position).normalized;
                     mouseDirectionV3.z = 0;
 
@@ -123,36 +119,6 @@ public class TrackDrawer : MonoBehaviour
         {
             for (int i = 0; i < _lineSpheres.Count; i++)
                 _lineSpheres[i].SetActive(false);
-        }
-    }
-
-    private void OnTouch()
-    {
-        if (Input.touchCount > 0)
-        {
-            for (int i = 0; i < Input.touchCount; i++)
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.touches[i].position);
-                RaycastHit hit;
-                if (Physics.Raycast(ray, out hit))
-                {
-                    Touch touch = Input.GetTouch(i);
-
-                    Debug.Log(hit.collider.gameObject.name);
-
-                    /*switch (touch.phase)
-                    {
-                        case TouchPhase.Began:
-                            break;
-
-                        case TouchPhase.Moved:
-                            break;
-
-                        case TouchPhase.Ended:
-                            break;
-                    }*/
-                }
-            }
         }
     }
 

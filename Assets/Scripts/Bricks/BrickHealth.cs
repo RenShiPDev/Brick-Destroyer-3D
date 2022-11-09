@@ -30,16 +30,9 @@ public class BrickHealth : MonoBehaviour
 
         ChangeHealth();
     }
-
-    private void Die()
-    {
-        DieEvent?.Invoke();
-        gameObject.SetActive(false);
-    }
-
     public void GetDamage(int damage = 1)
     {
-        if(this.enabled)
+        if (this.enabled)
             _health -= damage;
 
         if (_health <= 0)
@@ -62,6 +55,13 @@ public class BrickHealth : MonoBehaviour
         _maxHealth = maxHealth;
     }
 
+    private void Die()
+    {
+        DieEvent?.Invoke();
+        gameObject.SetActive(false);
+    }
+
+
     private void ChangeHealth()
     {
         _healthMaximator.SetMinMaxHealth(_health);
@@ -69,5 +69,4 @@ public class BrickHealth : MonoBehaviour
         HealthChangedEvent?.Invoke(_health, _healthMaximator);
         _healthText.text = _health.ToString();
     }
-
 }

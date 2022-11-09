@@ -5,11 +5,12 @@ using UnityEngine.UI;
 
 public class LevelButton : MonoBehaviour
 {
+    [SerializeField] private GameObject _lockedImage;
     [SerializeField] private Text _levelText;
     [SerializeField] private Transform _selectorPos;
-    [SerializeField] private GameObject _lockedImage;
 
     private GameObject _selector;
+
     private int _level;
     private int _currentLevel;
     private int _levelRecord;
@@ -23,16 +24,10 @@ public class LevelButton : MonoBehaviour
 
         _currentLevel = PlayerPrefs.GetInt("CurrentLevel");
         _levelRecord = PlayerPrefs.GetInt("LevelRecord");
-        if (_level <= _levelRecord)
-        {
-            _lockedImage.SetActive(false);
-            _levelText.gameObject.SetActive(true);
-        }
-        else
-        {
-            _lockedImage.SetActive(true);
-            _levelText.gameObject.SetActive(false);
-        }
+
+        bool isLocked = _level <= _levelRecord;
+        _lockedImage.SetActive(!isLocked);
+        _levelText.gameObject.SetActive(isLocked);
     }
 
     public void Update()

@@ -27,13 +27,15 @@ public class ObjectHidder : MonoBehaviour
     {
         if(!_inPosition)
             if (_isHidden)
-            {
                 MoveObject(Vector3.zero);
-            }
             else
-            {
                 MoveObject(_startScale);
-            }
+    }
+
+    public void ChangeVisibility()
+    {
+        _isHidden = !_isHidden;
+        _inPosition = false;
     }
 
     private void MoveObject(Vector3 targetScale)
@@ -45,11 +47,5 @@ public class ObjectHidder : MonoBehaviour
             _inPosition = true;
             VisibleHandler?.Invoke();
         }
-    }
-
-    public void ChangeVisibility()
-    {
-        _isHidden = !_isHidden;
-        _inPosition = false;
     }
 }

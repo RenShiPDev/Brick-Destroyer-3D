@@ -6,8 +6,7 @@ public class FantomBulletsBonuse : MonoBehaviour
 {
     private Stack<GameObject> _bullets = new Stack<GameObject>();
     private GameObject _fantomBullet;
-    private CannonShooter _cannonShooter;
-    
+    private CannonShooter _cannonShooter;    
 
     private int _health;
 

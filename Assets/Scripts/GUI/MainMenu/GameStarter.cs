@@ -9,7 +9,6 @@ public class GameStarter : MonoBehaviour
 
     private void Start()
     {
-
         foreach (var obj in _objectsToStart)
             obj.SetActive(true);
     }

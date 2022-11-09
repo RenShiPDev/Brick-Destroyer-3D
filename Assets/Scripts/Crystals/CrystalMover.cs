@@ -8,10 +8,9 @@ public class CrystalMover : MonoBehaviour
 
     private GameObject _crystalImage;
     private CrystalText _crystalText;
-
     private Vector3 _targetPosition;
-
     private Vector3 _startScale;
+
     private float _startDistance;
 
     private void Start()

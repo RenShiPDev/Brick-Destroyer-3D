@@ -66,7 +66,6 @@ public class BrickMaterialChanger : MonoBehaviour
 
         int step = (minMaxHealth[1] - minMaxHealth[0]) / _healthMaterials.Count;
         for (int i = 0; i < _healthMaterials.Count; i++)
-        {
             if ((_health + step * i) >= minMaxHealth[1])
             {
                 var material = _healthMaterials[_healthMaterials.Count - i - 1];
@@ -78,6 +77,5 @@ public class BrickMaterialChanger : MonoBehaviour
                 _meshRenderer.material.color = new Color(newColor.r, newColor.g, newColor.b);
                 break;
             }
-        }
     }
 }

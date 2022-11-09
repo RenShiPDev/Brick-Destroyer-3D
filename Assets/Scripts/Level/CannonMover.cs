@@ -10,15 +10,12 @@ public class CannonMover : MonoBehaviour
 
     private Vector3 _startCannonPos;
     private Vector3 _newCannonPos;
+
     private bool _isFirstBulletSet = false;
 
     private void Start()
     {
         _startCannonPos = _cannon.transform.position;
-    }
-
-    private void Update()
-    {
     }
 
     public void OnCollision(Vector3 position)
@@ -27,9 +24,7 @@ public class CannonMover : MonoBehaviour
         {
             _newCannonPos = position;
             if(Mathf.Abs(_newCannonPos.x) > Mathf.Abs(_cannonLimit.transform.position.x))
-            {
                 _newCannonPos.x = _newCannonPos.x < 0 ? _cannonLimit.transform.position.x : -_cannonLimit.transform.position.x;
-            }
 
             _newCannonPos = new Vector3(_newCannonPos.x, _startCannonPos.y, _newCannonPos.z);
             _isFirstBulletSet = true;

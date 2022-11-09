@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class CrystalText : MonoBehaviour
 {
     private Text _text;
+
     private int _crystalCount;
 
     private void OnEnable()
@@ -31,5 +32,4 @@ public class CrystalText : MonoBehaviour
     {
         _text.text = _crystalCount.ToString();
     }
-
 }

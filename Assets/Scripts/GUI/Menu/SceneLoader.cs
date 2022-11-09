@@ -57,18 +57,13 @@ public class SceneLoader : MonoBehaviour
                     _timer += Time.deltaTime;
 
                     if(_timer >= _loadingTime)
-                    {
                         Hide();
-                    }
                 }
             }
         }
         else
         {
-            if (_backgroundImage.color.a < 0)
-                _backgroundImage.color -= _startColor * _showSpeed;
-            else
-                _backgroundImage.color = new Color(0, 0, 0, 0);
+            _backgroundImage.color -= _backgroundImage.color.a < 0 ? _startColor * _showSpeed : _backgroundImage.color;
             _loadingText.text = "";
         }
     }
@@ -95,9 +90,7 @@ public class SceneLoader : MonoBehaviour
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName);
 
         while (!asyncLoad.isDone)
-        {
             yield return null;
-        }
     }
 
     private void SetLoader()
@@ -112,9 +105,7 @@ public class SceneLoader : MonoBehaviour
         int adsCounter = PlayerPrefs.GetInt("AdsCounter");
         Debug.Log(adsCounter);
 
-        if (adsCounter >= (6 + Random.Range(-2,2)))
-        {
-            FindObjectOfType<InterstitionalAD>().ShowOnDisplay();
-        }
+        //if (adsCounter >= (6 + Random.Range(-2,2)))
+        //    FindObjectOfType<InterstitionalAD>().ShowOnDisplay();
     }
 }
